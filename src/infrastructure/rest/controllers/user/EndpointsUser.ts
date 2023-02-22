@@ -3,7 +3,7 @@ import { ControllerUser } from './ControllerUser'
 
 export const UserEndpoints: TEndpoint[] = [
 	{
-		url: '/controlsUser',
+		url: '/user/signup',
 		actions: [
 			{
 				method: 'post',
