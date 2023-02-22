@@ -8,13 +8,14 @@ export class ControllerUser extends ErrorResponder {
 
 	public static async createUser(req: IRequest, res: IResponse): Promise<void> {
 		console.log('got the request!')
+		console.log(req.body)
 		try {
 			const user = new CreateUserBusiness(new DBImplementationFactory())
-			console.log('got the createUser business logic!')
-			//req.
-			return res.status(200).send({ msg: "ok!" }).end()
-		} catch (error) {
-			super.handleError(error as Error, res)
+			console.log('got the createUser use_case obj!', user)
+			return res.status(200).send(await user.createUser(req.body)).end()
+		} catch (error: any) {
+			return res.status(500).send({ err: error.message }).end()
+			//super.handleError(error as Error, res)
 		}
 	}
 }

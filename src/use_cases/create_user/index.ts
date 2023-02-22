@@ -8,6 +8,7 @@ export class CreateUserBusiness {
 	private userDB: IDBAUser
 
 	constructor(dbImplFactory: IDBImplementationFactory) {
+		console.log('use_cases constructor')
 		this.userDB = dbImplFactory.getImplementation('user')
 	}
 
@@ -26,6 +27,7 @@ export class CreateUserBusiness {
 			userId, email, username, profile
 		}
 		*/
+		userData.username = 'wforbes'
 		return {
 			userId: '1',
 			email: userData.email,
@@ -42,10 +44,8 @@ export class CreateUserBusiness {
 
 	private validateRequiredFields(userData) {
 		const isNotValid = (
-			_.isEmpty(userData.username)
-			|| _.isEmpty(userData.email)
+			_.isEmpty(userData.email)
 			|| _.isEmpty(userData.password)
-			|| _.isEmpty(userData.repeatPassword)
 			|| !userData.firstName
 			|| !userData.lastName
 		  )
