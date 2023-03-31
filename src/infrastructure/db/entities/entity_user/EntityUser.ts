@@ -1,14 +1,14 @@
-import { Entity, ObjectIdColumn, Column, BeforeInsert } from "typeorm"
+import { Entity, ObjectIdColumn, Column, BeforeInsert, PrimaryColumn } from "typeorm"
 import { IEntityUser } from './types'
 import { AEntity } from '../AEntity'
 
 const defaultContentBlock = { show: false, content: { text: '' } }
 
-@Entity({ synchronize: false, name: 'User'})
+@Entity({ synchronize: false, name: 'Users'})
 export class EntityUser extends AEntity<IEntityUser> implements IEntityUser {
 
     @ObjectIdColumn()
-    public _id!: IEntityUser['_id']
+    public id!: IEntityUser['id']
 
 	@Column()
 	public userId!: IEntityUser['userId']
@@ -19,14 +19,15 @@ export class EntityUser extends AEntity<IEntityUser> implements IEntityUser {
 	@Column()
 	public username!: IEntityUser['username']
 
+	//TODO: encrypt password
 	@Column()
-	public passhash!: IEntityUser['passhash']
+	public password!: IEntityUser['password']
 
-	@Column()
-	public profile!: IEntityUser['profile']
+	//@Column()
+	//public profile!: IEntityUser['profile']
 
-	@BeforeInsert()
+	/*@BeforeInsert()
 	public async insertId(): Promise<void> {
-		this._id = await super.getAutoIncrementedId('ControlsProposal')
-	}
+		this._id = await super.getAutoIncrementedId('User')
+	}*/
 }

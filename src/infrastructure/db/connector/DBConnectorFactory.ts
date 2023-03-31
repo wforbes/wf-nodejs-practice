@@ -18,6 +18,7 @@ export class DBConnectorFactory {
 				const connectionOptions = this.getParsedConnectionParams(
 					JSON.parse(process.env.WF_MONGODB || '{}'), type
 				)
+				console.log(connectionOptions)
 				connector = new DBConnector('mongodb')
 				await connector.connect(connectionOptions, 'mongodb')
 				connectionsMap.set(type, connector)

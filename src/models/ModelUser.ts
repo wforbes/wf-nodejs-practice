@@ -16,10 +16,10 @@ export interface ModelNewUser {
 }
 
 export interface ModelUser {
-	_id: number
+	id: number
 	userId: string
 	email: string
 	username: string
-	passhash: string
-	profile: TProfile
+	password: string //TODO: encrypt password
+	//profile: TProfile
 }

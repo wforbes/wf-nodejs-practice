@@ -1,0 +1,18 @@
+version: "3"
+services:
+  # Commented out for 'npm run dev' work
+  nodejs:
+    build: ./
+    image: wforbes87/wf-nodejs-practice
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - mongo-db:/data/db
+      #- ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+  redis:
+    image: redis
+volumes:
+  mongo-db:

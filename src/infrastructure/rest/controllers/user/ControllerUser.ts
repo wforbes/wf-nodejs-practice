@@ -11,8 +11,13 @@ export class ControllerUser extends ErrorResponder {
 		console.log(req.body)
 		try {
 			const user = new CreateUserBusiness(new DBImplementationFactory())
+			
 			console.log('got the createUser use_case obj!', user)
-			return res.status(200).send(await user.createUser(req.body)).end()
+			
+			
+			const responseUser = await user.createUser(req.body)
+
+			return res.status(200).send(responseUser).end()
 		} catch (error: any) {
 			return res.status(500).send({ err: error.message }).end()
 			//super.handleError(error as Error, res)

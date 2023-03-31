@@ -12,34 +12,30 @@ export class CreateUserBusiness {
 		this.userDB = dbImplFactory.getImplementation('user')
 	}
 
-	public async createUser(userData: TCreateUserData): Promise<TCreateUserResponse> {
-		console.log('hit createUser func')
-		this.validateRequiredFields(userData)
-		//this.validateUserDuplication(data)
-		//this.validatePasswordMatch(data)
-		//const user = this.getUserDataForInsert(userData)
-		/*
-		const {
-			userId, email, username, profile
-		} = await this.userDB.insert(user)
-
-		return {
-			userId, email, username, profile
-		}
-		*/
-		userData.username = 'wforbes'
-		return {
-			userId: '1',
-			email: userData.email,
-			username: userData.username,
-			profile: {
-				profileId: '1',
-				firstName: userData.firstName,
-				lastName: userData.lastName,
-				age: 35,
-				phone: ''
+	public async createUser(userData: Partial<TCreateUserData>): Promise<TCreateUserResponse> {
+		console.log('hit CreateUserBusiness.createUser func')
+		
+		try {
+			//this.validateRequiredFields(userData)
+			//const newUser: TUser = await this.getUserDataForInsert(userData)
+			const newUser: TUser = {
+				userId: this.generateUUID(),
+				username: userData.username!,
+				email: userData.email!,
+				password: userData.password!, //TODO: encrypt password
+				//passhash
 			}
+			const { userId, email, username }: ModelUser = await this.userDB.insert(newUser);
+			console.log('dbUser', {userId, username, email})
+			return {
+				userId, email, username
+			}
+		} catch(error) {
+			console.log('error', error)
+			return { userId: '', email: '', username: '' }
 		}
+
+		
 	}
 
 	private validateRequiredFields(userData) {
@@ -52,25 +48,37 @@ export class CreateUserBusiness {
 		if (isNotValid) throw new Error('Bad signup request! Missing required fields.')
 	}
 
-	private getUserDataForInsert(data: Partial<TCreateUserData>): TUser {
-		const passhash = this.hashPassword(data.password)
-		const userId = this.generateUUID()
-		const profile = this.generateUserProfile(data)
-		return {
-			userId,
-			username: data.username || '',
-			email: data.email || '',
-			passhash,
-			profile
+	private async getUserDataForInsert(data: Partial<TCreateUserData>): Promise<TUser> {
+		try {
+			const passhash = await this.hashPassword(data.password!)
+			const userId = this.generateUUID()
+			//const profile = this.generateUserProfile(data)
+			return {
+				userId,
+				username: data.username || '',
+				email: data.email || '',
+				password: passhash,//TODO: encrypt password
+				//passhash,
+				//profile
+			}
+		} catch (error) {
+			throw error
 		}
 	}
 
-	private hashPassword(password) {
-		return ""
+	private generateUUID(): string {
+		const crypto = require('crypto')
+		return crypto.randomUUID()
 	}
 
-	private generateUUID(): string {
-		return ""
+	private async hashPassword(password: string): Promise<string> {
+		const bcrypt = require('bcrypt')
+		const saltRounds = 10
+		return await bcrypt.getSalt(saltRounds, (salt: string) => {
+			return bcrypt.hash(password, salt)
+		}).catch((error: Error) => {
+			throw error
+		})
 	}
 
 	private generateUserProfile(userData): TProfile {

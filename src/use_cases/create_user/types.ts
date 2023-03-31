@@ -13,13 +13,14 @@ export type TUser = Pick<ModelUser,
 	| 'userId'
 	| 'email'
 	| 'username'
-	| 'passhash'
-	| 'profile'
+	| 'password'
+	//| 'passhash'
+	//| 'profile'
 >
 
 export type TCreateUserResponse = Pick<ModelUser,
 	| 'userId'
 	| 'email'
 	| 'username'
-	| 'profile'
+	//| 'profile'
 >
