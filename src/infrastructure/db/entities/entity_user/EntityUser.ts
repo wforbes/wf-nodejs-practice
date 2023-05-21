@@ -21,7 +21,7 @@ export class EntityUser extends AEntity<IEntityUser> implements IEntityUser {
 
 	//TODO: encrypt password
 	@Column()
-	public password!: IEntityUser['password']
+	public passhash!: IEntityUser['passhash']
 
 	//@Column()
 	//public profile!: IEntityUser['profile']

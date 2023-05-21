@@ -7,12 +7,12 @@ export abstract class ErrorResponder {
 		if (ErrorResponder.isSystemException(error)) {
 			return ErrorResponder.sendError(error, res, error.httpCode ?? 500)
 		}
-		/*
+		
 		ErrorResponder.sendError(
-			getException('unexpected', error.message),
+			error,
 			res,
 			500
-		)*/
+		)
 	}
 
 	private static sendError(error: Error | ErrorHandlingTypes.TException, res: IResponse, status: number): void {

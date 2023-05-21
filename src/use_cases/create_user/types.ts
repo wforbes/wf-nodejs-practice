@@ -13,8 +13,7 @@ export type TUser = Pick<ModelUser,
 	| 'userId'
 	| 'email'
 	| 'username'
-	| 'password'
-	//| 'passhash'
+	| 'passhash'
 	//| 'profile'
 >
 

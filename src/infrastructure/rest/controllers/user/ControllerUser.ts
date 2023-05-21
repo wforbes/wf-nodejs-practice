@@ -19,8 +19,8 @@ export class ControllerUser extends ErrorResponder {
 
 			return res.status(200).send(responseUser).end()
 		} catch (error: any) {
-			return res.status(500).send({ err: error.message }).end()
-			//super.handleError(error as Error, res)
+			//return res.status(500).send({ err: error.message }).end()
+			super.handleError(error as Error, res)
 		}
 	}
 }

@@ -20,6 +20,6 @@ export interface ModelUser {
 	userId: string
 	email: string
 	username: string
-	password: string //TODO: encrypt password
+	passhash: string //TODO: encrypt password
 	//profile: TProfile
 }
