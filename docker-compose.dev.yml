@@ -24,3 +24,5 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=wforbes
       - MONGO_INITDB_ROOT_PASSWORD=thepassword
       - MONGO_INITDB_DATABASE=admin
+    volumes:
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
